@@ -1,0 +1,34 @@
+{
+  "name": "aira-deploy",
+  "version": "0.6.0",
+  "description": "Airalab smart contract deployment tool",
+  "bin": {
+      "aira-deploy": "./index.js"
+  },
+  "dependencies": {
+    "web3": "0.18.2",
+    "solc": "0.4.9",
+    "promise": "",
+    "optimist": "",
+    "hash-files": "",
+    "string-template": "",
+    "recursive-readdir": ""
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/airalab/aira-deploy.git"
+  },
+  "keywords": [
+    "Ethereum",
+    "contract"
+  ],
+  "author": "Airalab",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/airalab/aira-deploy/issues"
+  },
+  "homepage": "https://github.com/airalab/aira-deploy#README.md"
+}
