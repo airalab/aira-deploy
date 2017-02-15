@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const Web3 = require('web3');
-const path = require('path');
 const web3 = new Web3();
 
+const fs = require('fs');
+const path = require('path');
+const compiler = require('./lib/compiler.js');
 const version = require('./package.json').version;
 
 const mainsol  = process.cwd() + '/contracts';
@@ -34,9 +36,7 @@ const contract = argv.C;
 
 web3.setProvider(new web3.providers.HttpProvider(argv.rpc));
 
-require('./lib/compiler.js').compile(soldirs, cachedir, argv.O, function (compiled) {
-    console.log('\nContract:\t' + contract);
-
+compiler.compile(soldirs, cachedir, argv.O, function (compiled) {
     if (typeof(compiled.errors) != 'undefined') {
         console.log('An error occured:');
         // Print errors
@@ -45,7 +45,7 @@ require('./lib/compiler.js').compile(soldirs, cachedir, argv.O, function (compil
         return;
     }
 
-    if (args.genabi) {
+    if (argv.genabi) {
         for (var module in compiled.contracts) {
             var abi = compiled.contracts[module].interface.replace("\n", "");
             console.log('Dumping '+module+'...');
@@ -55,9 +55,10 @@ require('./lib/compiler.js').compile(soldirs, cachedir, argv.O, function (compil
     }
 
     const bytecode = compiled.contracts[contract].bytecode;
-    const linked_bytecode = aira.compiler.link(libsfile, bytecode);
+    const linked_bytecode = compiler.link(libsfile, bytecode);
     const interface = compiled.contracts[contract].interface.replace("\n", "");
 
+    console.log('\nContract:\t' + contract);
     console.log('Binary size:\t' + linked_bytecode.length / 2 / 1024 + "K\n");
     if (argv.bytecode) console.log('Bytecode: '+linked_bytecode);
 
@@ -69,10 +70,12 @@ require('./lib/compiler.js').compile(soldirs, cachedir, argv.O, function (compil
         require('./lib/codegen.js').creator(compiled, contract, soldirs[0], version); 
     } else {
         // Deploy contract
-        require('./lib/deploy.js').deploy(JSON.parse(interface), linked_bytecode, args, web3,
+        require('./lib/deploy.js')(JSON.parse(interface), linked_bytecode, args, web3,
                     function (contract_address) {
-            if (argv.library)
-                aira.compiler.reglib(libsfile, contract, contract_address);
+            if (argv.library) {
+                compiler.reglib(libsfile, contract, contract_address);
+                console.log('Library address added to '+libsfile);
+            }
             
             console.log('Deployed: ' + contract_address);
         });
