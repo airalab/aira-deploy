@@ -1,9 +1,8 @@
 ## Ethereum smart contract compile & deployment
 
 [![Build Status](https://travis-ci.org/airalab/aira-deploy.svg?branch=master)](https://travis-ci.org/airalab/aira-deploy)
-![aira-deploy](https://img.shields.io/npm/l/aira-deploy.svg)
 ![aira-deploy](https://img.shields.io/npm/v/aira-deploy.svg)
-![BSD3 License](http://img.shields.io/badge/license-BSD3-brightgreen.svg)
+![aira-deploy](https://img.shields.io/npm/l/aira-deploy.svg)
 
 ### Usage
 
