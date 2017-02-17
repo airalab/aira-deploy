@@ -22,7 +22,9 @@ module.exports = function(soldirs, optimization, web3, contract, args, cb) {
             console.log('\nContract:\t' + contract);
             console.log('Binary size:\t' + linked_bytecode.length / 2 / 1024 + "K\n");
             // Deploy contract
-            deployer(JSON.parse(abi), linked_bytecode, args, web3, cb);
+            deployer(JSON.parse(abi), linked_bytecode, args, web3, function(contract_address) {
+                cb(web3.eth.contract(abi).at(contract_address));
+            });
         }
     });
 };
