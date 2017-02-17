@@ -17,12 +17,12 @@ module.exports = function(soldirs, optimization, web3, contract, args, cb) {
         } else {
             const bytecode = compiled.contracts[contract].bytecode;
             const linked_bytecode = compiler.link(libsfile, bytecode);
-            const abi = compiled.contracts[contract].interface.replace("\n", "");
+            const abi = JSON.parse(compiled.contracts[contract].interface);
 
             console.log('\nContract:\t' + contract);
             console.log('Binary size:\t' + linked_bytecode.length / 2 / 1024 + "K\n");
             // Deploy contract
-            deployer(JSON.parse(abi), linked_bytecode, args, web3, function(contract_address) {
+            deployer(abi, linked_bytecode, args, web3, function(contract_address) {
                 cb(web3.eth.contract(abi).at(contract_address));
             });
         }

@@ -1,6 +1,6 @@
 {
   "name": "aira-deploy",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Airalab smart contract deployment tool",
   "bin": {
       "aira-deploy": "./app.js"
