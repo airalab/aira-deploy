@@ -8,7 +8,7 @@
   "index": "index.js",
   "dependencies": {
     "web3": "0.18.2",
-    "solc": "0.4.9",
+    "solc": "0.4.16",
     "promise": "",
     "optimist": "",
     "hash-files": "",
